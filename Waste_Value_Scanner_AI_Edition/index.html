@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Waste Value Scanner — AI Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js"></script>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">♻</div><div><b>WASTE VALUE</b><span>SCANNER</span></div></div>
+  <p class="tag">Scan waste. Discover value.</p>
+  <nav>
+    <button class="nav active" data-page="home">⌂ <span>Home</span></button>
+    <button class="nav" data-page="scan">◎ <span>Scan Waste</span></button>
+    <button class="nav" data-page="history">◷ <span>History</span></button>
+    <button class="nav" data-page="tips">♧ <span>Eco Tips</span></button>
+    <button class="nav" data-page="about">ⓘ <span>About</span></button>
+  </nav>
+  <div class="side-card"><span>🌱</span><b>AI that finds a second life.</b><small>Identify an item, discover reuse, and estimate its value.</small></div>
+</aside>
+
+<main>
+<header>
+  <div><div class="eyebrow">WASTE → WEALTH • AI EDITION</div><h1 id="pageTitle">Turn waste into value.</h1></div>
+  <div id="modelStatus" class="pill loading">● Loading AI model…</div>
+</header>
+
+<section id="home" class="page active-page">
+  <div class="hero">
+    <div class="hero-copy">
+      <div class="badge">REAL COMPUTER VISION • NO API KEY</div>
+      <h2>Scan waste.<br><em>Discover value.</em></h2>
+      <p>Use your camera or upload an image. A pre-trained computer-vision model analyzes the object, then the Waste-to-Wealth engine turns the result into a reuse idea, estimated value and environmental impact.</p>
+      <button class="primary" onclick="showPage('scan')">Start AI Scan <span>→</span></button>
+      <div class="stats"><div><b>AI</b><small>Vision model</small></div><div><b>6+</b><small>Waste pathways</small></div><div><b>₹</b><small>Value engine</small></div></div>
+    </div>
+    <div class="hero-art"><div class="orb"></div><div class="plant p1">🌿</div><div class="plant p2">🍃</div><div class="bin">♻</div><div class="bottle">🧴</div><div class="can">🥫</div></div>
+  </div>
+  <div class="section-title"><h3>How it works</h3><span>AI + Waste-to-Wealth logic</span></div>
+  <div class="steps">
+    <div class="step"><i>01</i><b>Upload / capture</b><p>Give the scanner a clear photo of the item.</p></div>
+    <div class="step"><i>02</i><b>AI identifies</b><p>MobileNet analyzes the image directly in your browser.</p></div>
+    <div class="step"><i>03</i><b>Create value</b><p>The value engine suggests reuse, value and environmental impact.</p></div>
+  </div>
+</section>
+
+<section id="scan" class="page">
+  <div class="section-title"><div><h3>AI waste scanner</h3><span>Best results: one object, centered and well lit</span></div></div>
+  <div class="scanner-grid">
+    <div class="upload-card" id="dropzone">
+      <div class="upload-icon">↥</div>
+      <h3>Drop an image here</h3><p>or choose a photo from your device</p>
+      <input type="file" id="fileInput" accept="image/*" hidden>
+      <button class="primary" onclick="document.getElementById('fileInput').click()">Choose Image</button>
+      <button class="secondary" onclick="demoScan()">Try Demo Mode</button>
+      <small>AI runs in the browser • first load needs internet for the model</small>
+    </div>
+    <div class="preview-card">
+      <div id="previewEmpty"><span>📷</span><b>Your preview appears here</b><small>Then click “Analyze with AI”</small></div>
+      <img id="preview" alt="Waste preview">
+      <button id="analyzeBtn" class="primary full" onclick="analyze()" disabled>Analyze with AI ✦</button>
+    </div>
+  </div>
+  <div id="result" class="result hidden"></div>
+</section>
+
+<section id="history" class="page">
+  <div class="section-title"><div><h3>Scan history</h3><span>Saved discoveries on this device</span></div><button class="secondary" onclick="clearHistory()">Clear</button></div>
+  <div id="historyList" class="history-list"></div>
+</section>
+
+<section id="tips" class="page">
+<div class="section-title"><div><h3>Eco tips</h3><span>Turn everyday waste into resources</span></div></div>
+<div class="tip-grid">
+<div class="tip"><span>🥤</span><b>Reuse bottles</b><p>Clean suitable bottles and repurpose them as planters or organizers.</p></div>
+<div class="tip"><span>📦</span><b>Upcycle cardboard</b><p>Boxes can become storage, organizers, models or craft materials.</p></div>
+<div class="tip"><span>🔌</span><b>Recover e-waste</b><p>Keep old cables and electronics separate for responsible collection and parts recovery.</p></div>
+<div class="tip"><span>🥫</span><b>Recycle metals</b><p>Clean cans and other metal packaging have material value and can be recycled.</p></div>
+</div></section>
+
+<section id="about" class="page">
+<div class="about">
+<div class="badge">COLLEGE COMPETITION PROTOTYPE</div>
+<h2>Waste is not the end of the product.</h2>
+<p>The project combines computer vision with a simple waste-to-wealth knowledge engine. Instead of only saying “recyclable”, it asks: <b>What value can we create from this item?</b></p>
+<div class="tech"><b>Stack</b><span>HTML</span><span>CSS</span><span>JavaScript</span><span>TensorFlow.js</span><span>MobileNet</span><span>LocalStorage</span></div>
+<div class="note"><b>Important:</b> MobileNet is a general-purpose image classifier trained on ImageNet. It is genuine AI inference, but it is not a specialist waste dataset. For the competition's final version, a waste-specific model can replace it while keeping the same interface.</div>
+</div></section>
+</main></div>
+<script src="script.js"></script>
+</body></html>
